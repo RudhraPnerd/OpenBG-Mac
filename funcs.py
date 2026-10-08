@@ -30,7 +30,7 @@ def set_monterey() -> bool:
     """Changes the macOS wallpaper to Monterey."""
     return _run_wallpaper_script("set_monterey.sh")
 
-def set_seququoia() -> bool:
+def set_sequoia() -> bool:
     """Changes the macOS wallpaper to Sequoia."""
     return _run_wallpaper_script("set_seququoia.sh")
 
