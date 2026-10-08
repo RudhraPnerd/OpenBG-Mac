@@ -12,7 +12,7 @@ elif wallpaper == "goldengate":
 elif wallpaper == "monterey":
     funcs.set_monterey()
 elif wallpaper == "seququoia":
-    funcs.set_seququoia()
+    funcs.set_sequoia()
 elif wallpaper == "sonoma":
     funcs.set_sonoma()
 elif wallpaper == "tahoe":
