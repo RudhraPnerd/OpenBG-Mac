@@ -1,26 +1,42 @@
-import funcs
 import sys
+import platform
+from pathlib import Path
 
-print("Welcome to the OpenBG-Mac! Your ultimate macOS wallpaper changer.")
+from rich import print
+from rich.console import Console
+from rich.prompt import Prompt
 
-wallpaper = input("Please enter the wallpaper you want to set (bigsur, goldengate, monterey, sequoia, sonoma, tahoe, ventura): ").strip().lower()
+import funcs
+import progress
 
-if wallpaper == "bigsur":
-    funcs.set_bigsur()
-elif wallpaper == "goldengate":
-    funcs.set_goldengate()
-elif wallpaper == "monterey":
-    funcs.set_monterey()
-elif wallpaper == "sequoia":
-    funcs.set_seququoia()
-elif wallpaper == "sonoma":
-    funcs.set_sonoma()
-elif wallpaper == "tahoe":
-    funcs.set_tahoe()
-elif wallpaper == "ventura":
-    funcs.set_ventura()
-elif wallpaper == "quit":
-    print("Exiting the program. Goodbye!")
-    sys.exit(0)
-else:
-    print("Invalid wallpaper selection.") 
+operating_sys = platform.system()
+console = Console()
+
+BASE = "https://raw.githubusercontent.com/RudhraPnerd/OpenBG-Mac/main/Wallpapers"
+PICTURES = Path.home() / "Pictures"
+NAMES = ["bigsur", "goldengate", "monterey", "sequoia", "sonoma", "tahoe", "ventura"]
+
+
+def main():
+    # if operating_sys == "Windows":
+    #     print("[red]Your OS is not compatible with this program. Change to MacOS[/red]")
+    #     return
+
+    console.rule("[bold]Welcome to OpenBG-Mac!")
+    console.print("Your ultimate macOS wallpaper changer.", justify="center")
+
+    wallpaper = Prompt.ask(
+        "Please enter the wallpaper you want to set",
+        choices=NAMES + ["quit"],
+    )
+
+    if wallpaper in NAMES:
+        progress.download(f"{BASE}/{wallpaper}.heic", PICTURES / f"{wallpaper}.heic")
+        getattr(funcs, f"set_{wallpaper}")()
+    elif wallpaper == "quit":
+        print("[red]Exiting the program. Goodbye![/red]")
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
